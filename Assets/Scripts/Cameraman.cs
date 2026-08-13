@@ -9,7 +9,6 @@ public class Cameraman : MonoBehaviour
     [SerializeField] private Vector3 mousePositionScreen;
     private float originX, fixedY, fixedZ;
     private bool enableCameraFollow;
-    private Rigidbody2D cameraRB;
 
     private Camera cam;
 
@@ -41,10 +40,26 @@ public class Cameraman : MonoBehaviour
     {
         if (target == null) return;
 
+        // ZOOM
+        if (!(mousePositionScreen.x >= 1671))
+        {
+            float targetPosition = Mathf.Max(5f,
+                5f + (target.position.x * 0.05f) + (target.position.y * 0.4f));
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetPosition, Time.deltaTime * 5f);
+        }
+
+
+        // HOVER RIGHT SIDE
         mousePositionScreen = Input.mousePosition;
         if (!enableCameraFollow)
         {
-            if (mousePositionScreen.x >= 1671) MoveCameraWithLerp(targetArea);
+            if (mousePositionScreen.x >= 1671)
+            {
+                MoveCameraWithLerp(targetArea);
+                float targetPosition = Mathf.Max(5f,
+                    5f + (targetArea.position.x * 0.05f) + (targetArea.position.y * 0.4f));
+                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetPosition, Time.deltaTime * 5f);
+            }
             // else MoveCameraWithLerp(GetOriginTransform());
             else
             {
@@ -54,12 +69,8 @@ public class Cameraman : MonoBehaviour
                     Vector3.Lerp(transform.position, clampedTargetPosition, Time.deltaTime * cameraSmoothSpeed);
             }
         }
-        else MoveCameraWithLerp(target);
+        else MoveCameraWithLerp(target); // FOLLOW LAUNCHED OBJECT
         // transform.position = new Vector3(target.position.x, fixedY, fixedZ);
-
-
-        cam.orthographicSize = Mathf.Max(5f,
-            5f + (target.position.x * 0.05f) + (target.position.y * 0.4f));
     }
 
     Transform GetOriginTransform()
