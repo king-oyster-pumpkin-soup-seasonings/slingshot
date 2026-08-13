@@ -33,7 +33,6 @@ public class Cameraman : MonoBehaviour
         fixedZ = transform.position.z;
 
         cam = GetComponent<Camera>();
-        cameraRB = GetComponent<Rigidbody2D>();
     }
 
     private void LateUpdate()

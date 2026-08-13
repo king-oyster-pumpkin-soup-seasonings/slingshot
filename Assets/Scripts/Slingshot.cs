@@ -6,6 +6,8 @@ public class Slingshot : MonoBehaviour
     [SerializeField] private Vector2 mousePositionVec2;
     [SerializeField] private float force;
     [SerializeField] private Vector2 restingPointVec2, dragPointVec2;
+    [SerializeField] private Transform slingRangeT;
+    [SerializeField] private float rangeLimit;
     private Rigidbody2D objectRB;
     private bool isReady;
     private float idleTimeCounter, timeIdlePosition;
@@ -39,7 +41,9 @@ public class Slingshot : MonoBehaviour
     {
         if (!isReady) return;
 
-        transform.position = mousePositionVec2;
+        Vector2 direction = mousePositionVec2 - (Vector2)slingRangeT.position;
+        direction = Vector2.ClampMagnitude(direction, rangeLimit);
+        transform.position = direction + (Vector2)slingRangeT.position;
         dragPointVec2 = transform.position;
     }
 
@@ -65,11 +69,12 @@ public class Slingshot : MonoBehaviour
     {
         // SFs
         if (force == 0) force = 1f;
+        if (rangeLimit == 0) rangeLimit = 1.5f;
 
         // Non-SF
         isReady = true;
         objectRB = GetComponent<Rigidbody2D>();
-        restingPointVec2 = new Vector2(-6.75f, -2.5f);
+        restingPointVec2 = new Vector2(-6.5f, -2.5f);
     }
 
     void PositionAndReady()
