@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour
 {
+    [SerializeField] private GameObject dot;
     [SerializeField] private List<GameObject> guideDots;
+    [SerializeField] private List<GameObject> prevGuideDots;
+    [SerializeField] private int guideDotsAmount;
+    [SerializeField] private float guideDotPredictedTimeInterval;
+
 
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Vector2 mousePositionVec2;
@@ -23,6 +28,16 @@ public class Slingshot : MonoBehaviour
     {
         InitializeVariables();
         SetPositionAndReady();
+
+        // GUIDE DOTS
+        for (int i = 0; i < guideDotsAmount; i++)
+        {
+            GameObject guideDot = Instantiate(dot, transform.position, transform.rotation);
+            GameObject prevGuideDot = Instantiate(dot, transform.position, transform.rotation);
+            prevGuideDot.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
+            guideDots.Add(guideDot);
+            prevGuideDots.Add(prevGuideDot);
+        }
     }
 
     void Update()
@@ -58,36 +73,17 @@ public class Slingshot : MonoBehaviour
     {
         if (!isReady) return;
 
-        Vector2 direction =
-            mousePositionVec2 - (Vector2)slingRangeT.position;
-
+        // SLING
+        Vector2 direction = mousePositionVec2 - (Vector2)slingRangeT.position;
         direction = Vector2.ClampMagnitude(direction, rangeLimit);
-
-        transform.position =
-            direction + (Vector2)slingRangeT.position;
-
+        transform.position = direction + (Vector2)slingRangeT.position;
         dragPointVec2 = transform.position;
 
-        Vector2 launchVelocity =
-            (restingPointVec2 - dragPointVec2) * force;
-
-        Vector2 gravity = Physics2D.gravity;
-
-        float predictedTime = 0;
-        lineRenderer.positionCount = 10;
-
-        for (int i = 0; i < lineRenderer.positionCount; i++)
+        // GUIDE
+        for (int i = 0; i < guideDotsAmount; i++)
         {
-            predictedTime += 0.1f;
-
-            Vector2 predictedMovement =
-                launchVelocity * predictedTime +
-                0.5f * gravity * predictedTime * predictedTime;
-
-            lineRenderer.SetPosition(
-                i,
-                transform.position + (Vector3)predictedMovement
-            );
+            guideDots[i].transform.position =
+                GuidePoint(restingPointVec2 - dragPointVec2, guideDotPredictedTimeInterval * (i + 1));
         }
     }
 
@@ -96,6 +92,10 @@ public class Slingshot : MonoBehaviour
         if (!isReady) return;
 
         SetPositionAndReady();
+        for (int i = 0; i < guideDots.Count; i++)
+        {
+            guideDots[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
     private void OnMouseUp()
@@ -111,6 +111,15 @@ public class Slingshot : MonoBehaviour
             (restingPointVec2 - dragPointVec2) * force;
 
         ObjectLaunched?.Invoke(true);
+
+        if (guideDots.Count != 0)
+        {
+            for (int i = 0; i < guideDots.Count; i++)
+            {
+                prevGuideDots[i].transform.position = guideDots[i].transform.position;
+                guideDots[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+            }
+        }
     }
 
     private void InitializeVariables()
@@ -118,19 +127,15 @@ public class Slingshot : MonoBehaviour
         // SFs
         if (force == 0)
             force = 1f;
-
         if (rangeLimit == 0)
             rangeLimit = 1.5f;
-
         if (lineRenderer == null)
             lineRenderer = GetComponent<LineRenderer>();
 
         // Non-SFs
         isReady = true;
         gotAKill = false;
-
         objectRB = GetComponent<Rigidbody2D>();
-
         restingPointVec2 = new Vector2(-6.5f, -2.5f);
     }
 
@@ -166,5 +171,13 @@ public class Slingshot : MonoBehaviour
             Destroy(other.gameObject, 0.125f);
             gotAKill = true;
         }
+    }
+
+    private Vector2 GuidePoint(Vector2 direction, float predictedTime)
+    {
+        Vector2 dotPoint = (Vector2)transform.position + (direction * force * predictedTime) + 0.5f *
+            Physics2D.gravity *
+            (predictedTime * predictedTime);
+        return dotPoint;
     }
 }
