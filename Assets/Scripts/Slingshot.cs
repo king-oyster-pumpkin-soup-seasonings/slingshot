@@ -107,6 +107,9 @@ public class Slingshot : MonoBehaviour
 
         objectRB.gravityScale = 1f;
 
+        float pullDistance = Vector2.Distance(restingPointVec2, dragPointVec2);
+        objectRB.angularVelocity = -pullDistance * 480f;
+
         objectRB.linearVelocity =
             (restingPointVec2 - dragPointVec2) * force;
 
@@ -149,6 +152,7 @@ public class Slingshot : MonoBehaviour
         gotAKill = false;
 
         objectRB.linearVelocity = Vector3.zero;
+        objectRB.angularVelocity = 0f;
 
         ObjectLaunched?.Invoke(false);
     }
