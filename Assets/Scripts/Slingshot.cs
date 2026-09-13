@@ -10,7 +10,6 @@ public class Slingshot : MonoBehaviour
     [SerializeField] private int guideDotsAmount;
     [SerializeField] private float guideDotPredictedTimeInterval;
 
-
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Vector2 mousePositionVec2;
     [SerializeField] private float force;
@@ -24,6 +23,24 @@ public class Slingshot : MonoBehaviour
 
     public static Action<bool> ObjectLaunched, ObjectLaunchedGotSuccess;
 
+    private void OnEnable()
+    {
+        TargetObjectScript.OnTargetStateChange += GotAKillCheck;
+    }
+
+    private void OnDisable()
+    {
+        TargetObjectScript.OnTargetStateChange -= GotAKillCheck;
+    }
+
+    void GotAKillCheck(int state)
+    {
+        if (state <= 0)
+        {
+            gotAKill = true;
+        }
+    }
+
     void Start()
     {
         InitializeVariables();
@@ -34,7 +51,7 @@ public class Slingshot : MonoBehaviour
         {
             GameObject guideDot = Instantiate(dot, transform.position, transform.rotation);
             GameObject prevGuideDot = Instantiate(dot, transform.position, transform.rotation);
-            prevGuideDot.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
+            prevGuideDot.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0.25f);
             guideDots.Add(guideDot);
             prevGuideDots.Add(prevGuideDot);
         }
@@ -94,7 +111,7 @@ public class Slingshot : MonoBehaviour
         SetPositionAndReady();
         for (int i = 0; i < guideDots.Count; i++)
         {
-            guideDots[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            guideDots[i].GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 1f);
         }
     }
 
@@ -120,7 +137,7 @@ public class Slingshot : MonoBehaviour
             for (int i = 0; i < guideDots.Count; i++)
             {
                 prevGuideDots[i].transform.position = guideDots[i].transform.position;
-                guideDots[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+                guideDots[i].GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
             }
         }
     }
@@ -163,19 +180,17 @@ public class Slingshot : MonoBehaviour
         SetPositionAndReady();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log($"{objectRB.linearVelocity.x}");
-
-        if (other.CompareTag("TargetObject") &&
-            (objectRB.linearVelocity.x >= 2.5f ||
-             objectRB.linearVelocity.x <= -2.5f ||
-             objectRB.linearVelocity.y <= -2.5f))
-        {
-            Destroy(other.gameObject, 0.125f);
-            gotAKill = true;
-        }
-    }
+    // private void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.CompareTag("TargetObject") || collision.gameObject.CompareTag("MovingTarget"))
+    //     {
+    //         if (collision.relativeVelocity.magnitude >= 2.5f)
+    //         {
+    //             GotAKill();
+    //             Destroy(collision.gameObject, 0.125f);
+    //         }
+    //     }
+    // }
 
     private Vector2 GuidePoint(Vector2 direction, float predictedTime)
     {
@@ -183,5 +198,10 @@ public class Slingshot : MonoBehaviour
             Physics2D.gravity *
             (predictedTime * predictedTime);
         return dotPoint;
+    }
+
+    private void GotAKill()
+    {
+        gotAKill = true;
     }
 }

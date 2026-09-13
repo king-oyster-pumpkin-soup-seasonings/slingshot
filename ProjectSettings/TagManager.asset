@@ -8,6 +8,7 @@ TagManager:
   - AttemptCounter
   - SlingableEntity
   - TargetObject
+  - MovingTarget
   layers:
   - Default
   - TransparentFX

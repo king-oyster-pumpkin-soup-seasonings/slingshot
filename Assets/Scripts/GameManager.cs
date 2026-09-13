@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,7 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI attemptCounter;
+    [SerializeField] private TextMeshProUGUI stageCounter;
+    [SerializeField] private TextMeshProUGUI targetCounter;
     [SerializeField] private int attemptsLeft;
+    [SerializeField] private int stageNo;
+    [SerializeField] public int targetNoLeft;
+
 
     public static GameManager Instance { get; private set; }
 
@@ -18,19 +24,22 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         Slingshot.ObjectLaunchedGotSuccess += SuccessLaunchCheck;
+        TargetObjectScript.OnTargetStateChange += UpdateTargetHUD;
     }
 
     private void OnDisable()
     {
         Slingshot.ObjectLaunchedGotSuccess -= SuccessLaunchCheck;
+        TargetObjectScript.OnTargetStateChange -= UpdateTargetHUD;
     }
 
     void Start()
     {
+        FirstGame();
+
         if (attemptCounter == null)
             attemptCounter = GameObject.FindGameObjectWithTag("attemptCounter").GetComponent<TextMeshProUGUI>();
         attemptsLeft = 5;
-        UpdateAttemptHUD();
     }
 
     private void SuccessLaunchCheck(bool isSuccessful)
@@ -49,5 +58,23 @@ public class GameManager : MonoBehaviour
     void DeclareResetLevel()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    void FirstGame()
+    {
+        stageNo = 1;
+        UpdateHUD();
+        UpdateAttemptHUD();
+    }
+
+    void UpdateHUD()
+    {
+        stageCounter.text = stageNo.ToString();
+    }
+
+    void UpdateTargetHUD(int paramTargetStateChange)
+    {
+        targetNoLeft += paramTargetStateChange;
+        targetCounter.text = targetNoLeft.ToString();
     }
 }

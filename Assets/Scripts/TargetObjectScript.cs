@@ -1,18 +1,61 @@
+using System;
 using UnityEngine;
 
-public class TargetObject : MonoBehaviour
+public class TargetObjectScript : MonoBehaviour
 {
+    [SerializeField] private float speed;
+    [SerializeField] private float switchTime = 2f;
+    [SerializeField] private int hp;
+    [SerializeField] private float minImpactForce;
+
+    private Rigidbody2D rb;
+    private float timer;
+
+    public static event Action<int> OnTargetStateChange;
+
     void Start()
     {
+        InitStats();
+        OnTargetStateChange?.Invoke(1);
+        rb = GetComponent<Rigidbody2D>();
+        timer = switchTime;
     }
 
-    void Update()
+    void InitStats()
     {
+        hp = 1;
+        speed = 1.33f;
+        minImpactForce = 2.5f;
     }
 
+    private void FixedUpdate()
+    {
+        if (gameObject.CompareTag("MovingTarget"))
+        {
+            timer -= Time.fixedDeltaTime;
 
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("SlingableEntity")) Destroy(gameObject, 0.125f);
-    // }
+            if (timer <= 0)
+            {
+                speed = -speed;
+                timer = switchTime;
+            }
+
+            rb.linearVelocity = new Vector2(speed, rb.linearVelocity.y);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("SlingableEntity") &&
+            collision.relativeVelocity.magnitude >= minImpactForce)
+        {
+            hp--;
+
+            if (hp <= 0)
+            {
+                OnTargetStateChange?.Invoke(-1);
+                Destroy(gameObject);
+            }
+        }
+    }
 }
