@@ -50,17 +50,29 @@ public class GameManager : MonoBehaviour
         attemptsLeft = 5;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            Debug.Log("W pressed: Declaring next level");
+            DeclareNextLevel();
+        }
+    }
+
     private void SuccessLaunchCheck(bool isSuccessful)
     {
         if (!isSuccessful) attemptsLeft--;
         UpdateAttemptHUD();
-
-        if (attemptsLeft <= 0) DeclareResetLevel();
     }
 
     private void UpdateAttemptHUD()
     {
         attemptCounter.text = attemptsLeft.ToString();
+
+        if (attemptsLeft <= 0 && levelNo != 1)
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
     }
 
     void DeclareResetLevel()
@@ -110,6 +122,7 @@ public class GameManager : MonoBehaviour
         OnLevelChange?.Invoke();
         attemptsLeft = 5;
         UpdateHUD();
+        UpdateAttemptHUD();
         StartCoroutine(DisplayMessageCurrentLevelCoroutine());
     }
 
