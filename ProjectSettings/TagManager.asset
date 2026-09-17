@@ -9,6 +9,7 @@ TagManager:
   - SlingableEntity
   - TargetObject
   - MovingTarget
+  - Hazard
   layers:
   - Default
   - TransparentFX

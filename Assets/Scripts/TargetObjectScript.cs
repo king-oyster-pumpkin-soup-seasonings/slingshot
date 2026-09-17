@@ -30,6 +30,13 @@ public class TargetObjectScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (rb.position.x > 40 ||
+            rb.position.x < -15 ||
+            rb.position.y < -10)
+        {
+            DeclareDeath();
+        }
+
         if (gameObject.CompareTag("MovingTarget"))
         {
             timer -= Time.fixedDeltaTime;
@@ -53,9 +60,14 @@ public class TargetObjectScript : MonoBehaviour
 
             if (hp <= 0)
             {
-                OnTargetStateChange?.Invoke(-1);
-                Destroy(gameObject);
+                DeclareDeath();
             }
         }
+    }
+
+    void DeclareDeath()
+    {
+        OnTargetStateChange?.Invoke(-1);
+        Destroy(gameObject);
     }
 }
