@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,9 +9,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI attemptCounter;
     [SerializeField] private TextMeshProUGUI stageCounter;
     [SerializeField] private TextMeshProUGUI targetCounter;
+    [SerializeField] private TextMeshProUGUI messageToast;
     [SerializeField] private int attemptsLeft;
     [SerializeField] public int levelNo;
     [SerializeField] public int targetNoLeft;
+    [SerializeField] public bool playerCanNowMove;
 
 
     public static GameManager Instance { get; private set; }
@@ -65,8 +68,10 @@ public class GameManager : MonoBehaviour
     void FirstGame()
     {
         levelNo = 1;
+        playerCanNowMove = false;
         UpdateHUD();
         UpdateAttemptHUD();
+        StartCoroutine(DisplayMessageCurrentLevelCoroutine());
     }
 
     void UpdateHUD()
@@ -85,5 +90,16 @@ public class GameManager : MonoBehaviour
         levelNo++;
         UpdateHUD();
         OnLevelChange?.Invoke();
+    }
+
+    IEnumerator DisplayMessageCurrentLevelCoroutine()
+    {
+        messageToast.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        messageToast.text = "Level " + levelNo;
+        messageToast.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        messageToast.gameObject.SetActive(false);
+        playerCanNowMove = true;
     }
 }

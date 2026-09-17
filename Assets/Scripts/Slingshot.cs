@@ -95,6 +95,8 @@ public class Slingshot : MonoBehaviour
     {
         if (!isReady) return;
 
+        if (GameManager.Instance.playerCanNowMove == false) return;
+
         // SLING
         Vector2 direction = mousePositionVec2 - (Vector2)slingRangeT.position;
         direction = Vector2.ClampMagnitude(direction, rangeLimit);
@@ -113,6 +115,8 @@ public class Slingshot : MonoBehaviour
     {
         if (!isReady) return;
 
+        if (GameManager.Instance.playerCanNowMove == false) return;
+
         SetPositionAndReady();
         for (int i = 0; i < guideDots.Count; i++)
         {
@@ -123,6 +127,8 @@ public class Slingshot : MonoBehaviour
     private void OnMouseUp()
     {
         if (!isReady) return;
+
+        if (GameManager.Instance.playerCanNowMove == false) return;
 
         idleTimeCounter = 0;
         isReady = false;
