@@ -31,10 +31,12 @@ public class Cameraman : MonoBehaviour
         int currentLevel = GameManager.Instance.levelNo;
         if (currentLevel == 1)
         {
+            maxX = 5f;
             targetArea.position = new Vector3(4f, 0f, 0f);
         }
         else if (currentLevel == 2)
         {
+            maxX = 21f;
             targetArea.position = new Vector3(12f, 0.25f, 0f);
         }
     }
@@ -50,13 +52,16 @@ public class Cameraman : MonoBehaviour
         enableCameraFollow = false;
         if (cameraSmoothSpeed == 0) cameraSmoothSpeed = 5f;
         if (minX == 0) minX = 0f;
-        if (maxX == 0) maxX = 21f;
+        // if (maxX == 0) maxX = 21f; // now, varies on every level
 
         originX = 0;
         fixedY = transform.position.y;
         fixedZ = transform.position.z;
 
         cam = GetComponent<Camera>();
+
+        // Just to ensure camera is set to level 1 position at the start of the game
+        RepositionTargetAreaOnLevelChange();
     }
 
     private void LateUpdate()
