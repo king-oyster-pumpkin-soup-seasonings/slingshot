@@ -25,7 +25,7 @@ public class TargetObjectScript : MonoBehaviour
     {
         hp = 1;
         speed = 1.33f;
-        minImpactForce = 2.5f;
+        minImpactForce = 4f;
     }
 
     private void FixedUpdate()

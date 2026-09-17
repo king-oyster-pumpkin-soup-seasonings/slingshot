@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stageCounter;
     [SerializeField] private TextMeshProUGUI targetCounter;
     [SerializeField] private int attemptsLeft;
-    [SerializeField] private int stageNo;
+    [SerializeField] public int levelNo;
     [SerializeField] public int targetNoLeft;
 
 
     public static GameManager Instance { get; private set; }
+
+    public static Action OnLevelChange;
 
     private void Awake()
     {
@@ -62,19 +64,26 @@ public class GameManager : MonoBehaviour
 
     void FirstGame()
     {
-        stageNo = 1;
+        levelNo = 1;
         UpdateHUD();
         UpdateAttemptHUD();
     }
 
     void UpdateHUD()
     {
-        stageCounter.text = stageNo.ToString();
+        stageCounter.text = levelNo.ToString();
     }
 
     void UpdateTargetHUD(int paramTargetStateChange)
     {
         targetNoLeft += paramTargetStateChange;
         targetCounter.text = targetNoLeft.ToString();
+    }
+
+    public void DeclareNextLevel()
+    {
+        levelNo++;
+        UpdateHUD();
+        OnLevelChange?.Invoke();
     }
 }

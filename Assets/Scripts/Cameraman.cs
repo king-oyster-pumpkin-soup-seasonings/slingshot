@@ -12,8 +12,30 @@ public class Cameraman : MonoBehaviour
 
     private Camera cam;
 
-    private void OnEnable() => Slingshot.ObjectLaunched += SetCameraFollow;
-    private void OnDisable() => Slingshot.ObjectLaunched -= SetCameraFollow;
+    private void OnEnable()
+    {
+        Slingshot.ObjectLaunched += SetCameraFollow;
+        GameManager.OnLevelChange += RepositionTargetAreaOnLevelChange;
+    }
+
+    private void OnDisable()
+    {
+        Slingshot.ObjectLaunched -= SetCameraFollow;
+        GameManager.OnLevelChange -= RepositionTargetAreaOnLevelChange;
+    }
+
+    void RepositionTargetAreaOnLevelChange()
+    {
+        int currentLevel = GameManager.Instance.levelNo;
+        if (currentLevel == 1)
+        {
+            targetArea.position = new Vector3(4f, 0f, 0f);
+        }
+        else if (currentLevel == 2)
+        {
+            targetArea.position = new Vector3(12f, 0.25f, 0f);
+        }
+    }
 
 
     void SetCameraFollow(bool state = true)
