@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         levelNo++;
         levelList[levelNo - 1].SetActive(true);
         OnLevelChange?.Invoke();
+        attemptsLeft = 5;
         UpdateHUD();
         StartCoroutine(DisplayMessageCurrentLevelCoroutine());
     }
