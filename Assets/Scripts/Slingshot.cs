@@ -86,6 +86,11 @@ public class Slingshot : MonoBehaviour
             DeclareRunOutOfMotion();
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Hazard")) DeclareRunOutOfMotion();
+    }
+
     private void OnMouseDrag()
     {
         if (!isReady) return;
