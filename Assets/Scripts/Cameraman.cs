@@ -10,6 +10,8 @@ public class Cameraman : MonoBehaviour
     private float originX, fixedY, fixedZ;
     private bool enableCameraFollow;
 
+    [SerializeField] private GameObject cameraHoverGuide;
+
     private Camera cam;
 
     private void OnEnable()
@@ -60,6 +62,7 @@ public class Cameraman : MonoBehaviour
     private void LateUpdate()
     {
         if (target == null) return;
+        if (GameManager.Instance.playerCanNowMove == false) return;
 
         // ZOOM
         if (!(mousePositionScreen.x >= 1671))
@@ -76,6 +79,7 @@ public class Cameraman : MonoBehaviour
         {
             if (mousePositionScreen.x >= 1671)
             {
+                if (cameraHoverGuide.activeSelf) cameraHoverGuide.SetActive(false);
                 MoveCameraWithLerp(targetArea);
                 float targetPosition = Mathf.Max(5f,
                     5f + (targetArea.position.x * 0.05f) + (targetArea.position.y * 0.4f));
@@ -88,9 +92,15 @@ public class Cameraman : MonoBehaviour
                     new Vector3(Mathf.Clamp(0, minX, maxX), fixedY, fixedZ);
                 transform.position =
                     Vector3.Lerp(transform.position, clampedTargetPosition, Time.deltaTime * cameraSmoothSpeed);
+                if (cameraHoverGuide.activeSelf == false)
+                    cameraHoverGuide.SetActive(true);
             }
         }
-        else MoveCameraWithLerp(target); // FOLLOW LAUNCHED OBJECT
+        else
+        {
+            MoveCameraWithLerp(target); // FOLLOW LAUNCHED OBJECT
+            cameraHoverGuide.SetActive(false);
+        }
         // transform.position = new Vector3(target.position.x, fixedY, fixedZ);
     }
 

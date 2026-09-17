@@ -17,6 +17,8 @@ public class Slingshot : MonoBehaviour
     [SerializeField] private Transform slingRangeT;
     [SerializeField] private float rangeLimit;
 
+    [SerializeField] private GameObject slingshotGuide;
+
     private Rigidbody2D objectRB;
     private bool isReady, gotAKill;
     private float idleTimeCounter;
@@ -187,6 +189,7 @@ public class Slingshot : MonoBehaviour
 
     private void DeclareRunOutOfMotion()
     {
+        if (slingshotGuide.activeSelf) slingshotGuide.SetActive(false);
         ObjectLaunchedGotSuccess?.Invoke(gotAKill);
         SetPositionAndReady();
     }

@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int levelNo;
     [SerializeField] public int targetNoLeft;
     [SerializeField] public bool playerCanNowMove;
-
+    [SerializeField] private GameObject slingshotGuide;
+    [SerializeField] private GameObject cameraHoverGuide;
 
     public static GameManager Instance { get; private set; }
 
@@ -71,6 +72,8 @@ public class GameManager : MonoBehaviour
         playerCanNowMove = false;
         UpdateHUD();
         UpdateAttemptHUD();
+        slingshotGuide.SetActive(false);
+        cameraHoverGuide.SetActive(false);
         StartCoroutine(DisplayMessageCurrentLevelCoroutine());
     }
 
@@ -98,8 +101,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         messageToast.text = "Level " + levelNo;
         messageToast.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
         messageToast.gameObject.SetActive(false);
         playerCanNowMove = true;
+        yield return new WaitForSeconds(1f);
+        slingshotGuide.SetActive(true);
+        cameraHoverGuide.SetActive(true);
     }
 }
