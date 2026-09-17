@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public bool playerCanNowMove;
     [SerializeField] private GameObject slingshotGuide;
     [SerializeField] private GameObject cameraHoverGuide;
+    [SerializeField] private List<GameObject> levelList;
 
     public static GameManager Instance { get; private set; }
 
@@ -69,6 +71,12 @@ public class GameManager : MonoBehaviour
     void FirstGame()
     {
         levelNo = 1;
+        for (int i = 0; i < levelList.Count; i++)
+        {
+            levelList[i].SetActive(false);
+        }
+
+        levelList[levelNo - 1].SetActive(true);
         playerCanNowMove = false;
         UpdateHUD();
         UpdateAttemptHUD();
@@ -86,13 +94,22 @@ public class GameManager : MonoBehaviour
     {
         targetNoLeft += paramTargetStateChange;
         targetCounter.text = targetNoLeft.ToString();
+
+        if (targetNoLeft <= 0)
+        {
+            StartCoroutine(DisplayMessageLevelCompleteCoroutine());
+            playerCanNowMove = false;
+        }
     }
 
     public void DeclareNextLevel()
     {
+        levelList[levelNo - 1].SetActive(false);
         levelNo++;
-        UpdateHUD();
+        levelList[levelNo - 1].SetActive(true);
         OnLevelChange?.Invoke();
+        UpdateHUD();
+        StartCoroutine(DisplayMessageCurrentLevelCoroutine());
     }
 
     IEnumerator DisplayMessageCurrentLevelCoroutine()
@@ -107,5 +124,16 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         slingshotGuide.SetActive(true);
         cameraHoverGuide.SetActive(true);
+    }
+
+    IEnumerator DisplayMessageLevelCompleteCoroutine()
+    {
+        messageToast.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        messageToast.text = "Level " + levelNo + " Complete!";
+        messageToast.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        messageToast.gameObject.SetActive(false);
+        DeclareNextLevel();
     }
 }
