@@ -10,6 +10,7 @@ TagManager:
   - TargetObject
   - MovingTarget
   - Hazard
+  - Triangle
   layers:
   - Default
   - TransparentFX

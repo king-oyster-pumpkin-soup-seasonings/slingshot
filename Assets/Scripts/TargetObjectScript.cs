@@ -53,8 +53,8 @@ public class TargetObjectScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("SlingableEntity") &&
-            collision.relativeVelocity.magnitude >= minImpactForce)
+        if (collision.gameObject.CompareTag("SlingableEntity") && collision.relativeVelocity.magnitude >= minImpactForce
+            || collision.gameObject.CompareTag("Triangle") && collision.relativeVelocity.magnitude >= 1f)
         {
             hp--;
 
