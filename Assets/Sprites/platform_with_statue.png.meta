@@ -1,0 +1,323 @@
+fileFormatVersion: 2
+guid: 9a8e6a6d135f67a2bbba34350262303f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6963365836934833027
+    second: platform_with_statue_0
+  - first:
+      213: 2004769645263980530
+    second: platform_with_statue_1
+  - first:
+      213: -5148764406231510629
+    second: platform_with_statue_2
+  - first:
+      213: -3952651982535956983
+    second: platform_with_statue_3
+  - first:
+      213: 8857353993866518757
+    second: platform_with_statue_4
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: 0.1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: platform_with_statue_0
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 360
+        width: 184
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 383679fc558d2a060800000000000000
+      internalID: 6963365836934833027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platform_with_statue_1
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 0
+        width: 269
+        height: 487
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f70272ee5f52db10800000000000000
+      internalID: 2004769645263980530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platform_with_statue_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 0
+        width: 141
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9155664d0aeb88b0800000000000000
+      internalID: -5148764406231510629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platform_with_statue_3
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 0
+        width: 9
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9066334c6fb5529c0800000000000000
+      internalID: -3952651982535956983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platform_with_statue_4
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 0
+        width: 142
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e02d467784abea70800000000000000
+      internalID: 8857353993866518757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape:
+    - - {x: 366, y: -195}
+      - {x: 359, y: -143}
+      - {x: 346, y: -98}
+      - {x: 319, y: -49}
+      - {x: 317, y: 12}
+      - {x: 320, y: 30}
+      - {x: 340, y: 50}
+      - {x: 361, y: 76}
+      - {x: 369, y: 116}
+      - {x: 368, y: 153}
+      - {x: 353, y: 184}
+      - {x: 334, y: 195}
+      - {x: 315, y: 199}
+      - {x: 284, y: 210}
+      - {x: 250, y: 212}
+      - {x: 276, y: 227}
+      - {x: 257, y: 223}
+      - {x: 224, y: 205}
+      - {x: 164, y: 185}
+      - {x: 123, y: 157}
+      - {x: 109, y: 133}
+      - {x: 111, y: 76}
+      - {x: 117, y: 57}
+      - {x: 145, y: 44}
+      - {x: 208, y: 43}
+      - {x: 236, y: 21}
+      - {x: 237, y: -54}
+      - {x: 201, y: -167}
+      - {x: 196, y: -195}
+      - {x: 202, y: -220}
+      - {x: 209, y: -255}
+      - {x: 375, y: -256}
+    - - {x: -2, y: 106}
+      - {x: -1, y: 113}
+      - {x: -1, y: 133}
+      - {x: -3, y: 138}
+      - {x: -93, y: 140}
+      - {x: -182, y: 140}
+      - {x: -187, y: 137}
+      - {x: -187, y: 124}
+      - {x: -180, y: 103}
+      - {x: -85, y: 103}
+    - - {x: 55, y: -242}
+      - {x: 55, y: -60}
+      - {x: 52, y: -48}
+      - {x: -76, y: -48}
+      - {x: -77, y: -73}
+      - {x: -75, y: -162}
+      - {x: -74, y: -246}
+      - {x: -75, y: -256}
+      - {x: 53, y: -256}
+    - - {x: -172, y: -256}
+      - {x: -174, y: -250}
+      - {x: -175, y: -239}
+      - {x: -175, y: -225}
+      - {x: -169, y: -140}
+      - {x: -166, y: -100}
+      - {x: -161, y: -86}
+      - {x: -295, y: -84}
+      - {x: -293, y: -116}
+      - {x: -292, y: -174}
+      - {x: -296, y: -256}
+      - {x: -210, y: -256}
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      platform_with_statue_0: 6963365836934833027
+      platform_with_statue_1: 2004769645263980530
+      platform_with_statue_2: -5148764406231510629
+      platform_with_statue_3: -3952651982535956983
+      platform_with_statue_4: 8857353993866518757
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

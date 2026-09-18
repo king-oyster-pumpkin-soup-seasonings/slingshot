@@ -69,15 +69,11 @@ public class GameManager : MonoBehaviour
     {
         attemptCounter.text = attemptsLeft.ToString();
 
-        if (attemptsLeft <= 0 && levelNo != 1)
+        if (attemptsLeft <= 0)
         {
-            SceneManager.LoadScene("GameOverScene");
+            if (levelNo != 1) SceneManager.LoadScene("GameOverScene");
+            else SceneManager.LoadScene("GameScene");
         }
-    }
-
-    void DeclareResetLevel()
-    {
-        SceneManager.LoadScene("GameScene");
     }
 
     void FirstGame()

@@ -40,7 +40,7 @@ public class Cameraman : MonoBehaviour
         }
         else if (currentLevel == 2)
         {
-            minX = 2.5f;
+            minX = 3.5f;
             maxX = 15f;
             cameraOrthographicSizeModVal = 2f;
             cam.orthographicSize += cameraOrthographicSizeModVal;
