@@ -144,6 +144,9 @@ public class GameManager : MonoBehaviour
         messageToast.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
         messageToast.gameObject.SetActive(false);
-        DeclareNextLevel();
+
+        if (levelNo == GameManager.Instance.levelList.Count)
+            SceneManager.LoadScene("GameCompleteScene");
+        else DeclareNextLevel();
     }
 }
