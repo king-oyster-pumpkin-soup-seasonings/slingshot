@@ -11,14 +11,15 @@ TagManager:
   - MovingTarget
   - Hazard
   - Triangle
+  - SnakeTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Terrain
   - Water
   - UI
-  - 
+  - GlitchedObject
   - 
   - 
   - 

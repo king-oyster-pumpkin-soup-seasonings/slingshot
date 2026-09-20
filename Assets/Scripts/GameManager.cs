@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public bool playerCanNowMove;
     [SerializeField] private GameObject slingshotGuide;
     [SerializeField] private GameObject cameraHoverGuide;
+    [SerializeField] private GameObject levelGameObject;
     [SerializeField] private List<GameObject> levelList;
 
     public static GameManager Instance { get; private set; }
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
         }
 
         levelList[levelNo - 1].SetActive(true);
+        levelGameObject = Instantiate(levelList[levelNo - 1], Vector3.zero, Quaternion.identity);
         playerCanNowMove = false;
         UpdateHUD();
         UpdateAttemptHUD();
@@ -112,9 +114,11 @@ public class GameManager : MonoBehaviour
 
     public void DeclareNextLevel()
     {
-        levelList[levelNo - 1].SetActive(false);
+        Destroy(levelGameObject);
         levelNo++;
-        levelList[levelNo - 1].SetActive(true);
+        levelGameObject = Instantiate(levelList[levelNo - 1], Vector3.zero, Quaternion.identity);
+        Debug.Log("Level Game Object exist?: " + (levelGameObject != null));
+        levelGameObject.SetActive(true);
         OnLevelChange?.Invoke();
         attemptsLeft = 5;
         UpdateHUD();

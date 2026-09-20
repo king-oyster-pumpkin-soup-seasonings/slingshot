@@ -31,20 +31,24 @@ public class Cameraman : MonoBehaviour
     void RepositionTargetAreaOnLevelChange()
     {
         int currentLevel = GameManager.Instance.levelNo;
-        if (currentLevel == 1 || currentLevel == 2)
+        if (currentLevel == 1)
         {
             minX = 0f;
             maxX = 3f;
             cameraOrthographicSizeModVal = 0f;
             targetArea.position = new Vector3(4f, 0f, 0f);
         }
+        else if (currentLevel == 2)
+        {
+            maxX = 1f;
+        }
         else if (currentLevel == 3)
         {
-            minX = 3.5f;
+            minX = 2.25f;
             maxX = 10f;
             cameraOrthographicSizeModVal = 1.25f;
             cam.orthographicSize += cameraOrthographicSizeModVal;
-            targetArea.position = new Vector3(5f, 0f, 0f);
+            targetArea.position = new Vector3(8f, 0f, 0f);
         }
         else if (currentLevel == 4)
         {
