@@ -109,6 +109,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 1363098687861349510, guid: c8a0a4c1222d226698f88832e5c84e28, type: 3}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!50 &403579424436633504
 Rigidbody2D:
   serializedVersion: 5
@@ -721,6 +723,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 1363098687861349510, guid: c8a0a4c1222d226698f88832e5c84e28, type: 3}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &1220809725244248401
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -930,6 +934,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 1363098687861349510, guid: c8a0a4c1222d226698f88832e5c84e28, type: 3}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &1185156006725375973
 CircleCollider2D:
   m_ObjectHideFlags: 0

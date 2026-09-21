@@ -419,7 +419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &448384445141753022
 Transform:
   m_ObjectHideFlags: 0
@@ -803,6 +803,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 0}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &4446430532112733245
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1012,6 +1014,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 0}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &3165452187249279530
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1925,6 +1929,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 0}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &3529871477928584112
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2134,6 +2140,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 0}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &4541984025808784832
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3046,6 +3054,8 @@ MonoBehaviour:
   minImpactForce: 3
   exclamationMark: {fileID: 0}
   targetObject: {fileID: 0}
+  spitForce: 10
+  spitTransform: {fileID: 0}
 --- !u!58 &4862941233185027991
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TargetObjectScript : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class TargetObjectScript : MonoBehaviour
     // SNAKE
     private bool snakeResidingCouroutineOngoing;
     [SerializeField] private GameObject exclamationMark, targetObject;
+    [SerializeField] private float spitForce = 10f;
+    [SerializeField] private Transform spitTransform;
+    private bool snakeRockTriggeEnumeratorOngoing;
+    private bool snakeIsUnderground;
+    private Coroutine varCorForSnakeResiding;
 
     private Rigidbody2D rb;
     private float timer;
@@ -30,7 +36,7 @@ public class TargetObjectScript : MonoBehaviour
 
     void Start()
     {
-        if (exclamationMark) exclamationMark.SetActive(false);
+        if (gameObject.CompareTag("SnakeTarget") && exclamationMark) exclamationMark.SetActive(false);
         InitStats();
         OnTargetStateChange?.Invoke(1);
         rb = GetComponent<Rigidbody2D>();
@@ -43,6 +49,7 @@ public class TargetObjectScript : MonoBehaviour
         baseSpeed = 1.33f;
         minImpactForce = 4f;
         snakeResidingCouroutineOngoing = false;
+        snakeRockTriggeEnumeratorOngoing = false;
 
         if (gameObject.CompareTag("SnakeTarget"))
         {
@@ -79,7 +86,7 @@ public class TargetObjectScript : MonoBehaviour
         if (gameObject.CompareTag("SnakeTarget"))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, dynamicSpeed);
-            if (!snakeResidingCouroutineOngoing) StartCoroutine(SnakeResidingCoroutine());
+            if (!snakeResidingCouroutineOngoing) varCorForSnakeResiding = StartCoroutine(SnakeResidingCoroutine());
         }
     }
 
@@ -100,16 +107,18 @@ public class TargetObjectScript : MonoBehaviour
     void DeclareDeath()
     {
         OnTargetStateChange?.Invoke(-1);
+        if (gameObject.CompareTag("SnakeTarget")) exclamationMark.SetActive(false);
         Destroy(gameObject);
     }
 
     IEnumerator SnakeResidingCoroutine()
     {
         snakeResidingCouroutineOngoing = true;
-        Debug.Log("[>>> X] Snake Coroutine Start");
+        // Debug.Log("[>>> X] Snake Coroutine Start");
         yield return new WaitForSeconds(2f);
 
         dynamicSpeed = baseSpeed;
+        snakeIsUnderground = false;
         yield return new WaitForSeconds(0.5f);
 
         dynamicSpeed = 0;
@@ -119,10 +128,11 @@ public class TargetObjectScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         dynamicSpeed = 0;
+        snakeIsUnderground = true;
         yield return new WaitForSeconds(2f);
 
         snakeResidingCouroutineOngoing = false;
-        Debug.Log("Snake Coroutine Ended [X >>>]");
+        // Debug.Log("Snake Coroutine Ended [X >>>]");
     }
 
     void StartSnakeRockTriggerCoroutine()
@@ -132,6 +142,10 @@ public class TargetObjectScript : MonoBehaviour
 
     IEnumerator SnakeRockTriggeEnumerator()
     {
+        if (!exclamationMark) yield break;
+        if (snakeRockTriggeEnumeratorOngoing) yield break;
+        snakeRockTriggeEnumeratorOngoing = true;
+
         for (int i = 0; i < 3; i++)
         {
             exclamationMark.SetActive(true);
@@ -140,7 +154,15 @@ public class TargetObjectScript : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
         }
 
-        Instantiate(targetObject, new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z),
-            Quaternion.identity);
+        // spittedOutObjectRB.bodyType = RigidbodyType2D.Kinematic;
+        yield return new WaitUntil(() => snakeIsUnderground);
+        GameObject spittedOutObject = Instantiate(targetObject, spitTransform.position, spitTransform.rotation);
+        // spittedOutObject.layer = LayerMask.NameToLayer("GlitchedObject");
+        Rigidbody2D spittedOutObjectRB = spittedOutObject.GetComponent<Rigidbody2D>();
+        spittedOutObjectRB.AddForce(new Vector2(Random.Range(-1f, 1f), spitForce), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(3f);
+        // spittedOutObject.layer = LayerMask.NameToLayer("Default");
+
+        snakeRockTriggeEnumeratorOngoing = false;
     }
 }
