@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject cameraHoverGuide;
     [SerializeField] private GameObject levelGameObject;
     [SerializeField] private List<GameObject> levelList;
+    [SerializeField] private TextMeshProUGUI cameraXEndEarlyToast;
 
     public static GameManager Instance { get; private set; }
 
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         FirstGame();
+        cameraXEndEarlyToast = cameraHoverGuide.GetComponentInChildren<TextMeshProUGUI>();
 
         if (attemptCounter == null)
             attemptCounter = GameObject.FindGameObjectWithTag("attemptCounter").GetComponent<TextMeshProUGUI>();
@@ -137,6 +139,7 @@ public class GameManager : MonoBehaviour
         playerCanNowMove = true;
         yield return new WaitForSeconds(1f);
         slingshotGuide.SetActive(true);
+        cameraXEndEarlyToast.text = "Hover Right";
         cameraHoverGuide.SetActive(true);
     }
 

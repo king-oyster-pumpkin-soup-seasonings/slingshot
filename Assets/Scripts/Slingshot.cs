@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Slingshot : MonoBehaviour
 {
@@ -18,9 +20,11 @@ public class Slingshot : MonoBehaviour
     [SerializeField] private float rangeLimit;
 
     [SerializeField] private GameObject slingshotGuide;
+    [SerializeField] private GameObject cameraHoverGuide;
+    [SerializeField] private TextMeshProUGUI cameraXEndEarlyToast;
 
     private Rigidbody2D objectRB;
-    private bool isReady, gotAKill;
+    private bool isReady, gotAKill, isMoving;
     private float idleTimeCounter;
 
     public static Action<bool> ObjectLaunched, ObjectLaunchedGotSuccess;
@@ -62,6 +66,11 @@ public class Slingshot : MonoBehaviour
     void Update()
     {
         mousePositionVec2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isMoving)
+        {
+            DeclareRunOutOfMotion();
+        }
     }
 
     void FixedUpdate()
@@ -134,6 +143,7 @@ public class Slingshot : MonoBehaviour
 
         idleTimeCounter = 0;
         isReady = false;
+        isMoving = true;
 
         objectRB.gravityScale = 1f;
 
@@ -170,6 +180,7 @@ public class Slingshot : MonoBehaviour
         gotAKill = false;
         objectRB = GetComponent<Rigidbody2D>();
         restingPointVec2 = new Vector2(-6.5f, -2.5f);
+        cameraXEndEarlyToast = cameraHoverGuide.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void SetPositionAndReady()
@@ -178,12 +189,15 @@ public class Slingshot : MonoBehaviour
 
         transform.position = restingPointVec2;
 
+        isMoving = false;
         isReady = true;
         gotAKill = false;
 
         objectRB.linearVelocity = Vector3.zero;
         objectRB.angularVelocity = 0f;
 
+        cameraXEndEarlyToast.text = "Hover Right";
+        cameraHoverGuide.GetComponent<Image>().enabled = true;
         ObjectLaunched?.Invoke(false);
     }
 

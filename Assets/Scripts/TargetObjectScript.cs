@@ -156,6 +156,7 @@ public class TargetObjectScript : MonoBehaviour
 
         // spittedOutObjectRB.bodyType = RigidbodyType2D.Kinematic;
         yield return new WaitUntil(() => snakeIsUnderground);
+        Debug.Log("Spawning spit object");
         GameObject spittedOutObject = Instantiate(targetObject, spitTransform.position, spitTransform.rotation);
         // spittedOutObject.layer = LayerMask.NameToLayer("GlitchedObject");
         Rigidbody2D spittedOutObjectRB = spittedOutObject.GetComponent<Rigidbody2D>();

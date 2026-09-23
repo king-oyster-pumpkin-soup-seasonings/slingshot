@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cameraman : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class Cameraman : MonoBehaviour
     [SerializeField] private Vector3 mousePositionScreen;
     private float originX, fixedY, fixedZ;
     private bool enableCameraFollow;
+    private TextMeshProUGUI cameraXEndEarlyToast;
 
 
     [SerializeField] private GameObject cameraHoverGuide;
@@ -44,13 +47,18 @@ public class Cameraman : MonoBehaviour
         }
         else if (currentLevel == 3)
         {
+            maxX = 13f;
+            targetArea.position = new Vector3(12f, 0f, 0f);
+        }
+        else if (currentLevel == 4)
+        {
             minX = 2.25f;
             maxX = 10f;
             cameraOrthographicSizeModVal = 1.25f;
             cam.orthographicSize += cameraOrthographicSizeModVal;
             targetArea.position = new Vector3(8f, 0f, 0f);
         }
-        else if (currentLevel == 4)
+        else if (currentLevel == 5)
         {
             minX = 3.5f;
             maxX = 15f;
@@ -79,6 +87,7 @@ public class Cameraman : MonoBehaviour
         fixedZ = transform.position.z;
 
         cam = GetComponent<Camera>();
+        cameraXEndEarlyToast = cameraHoverGuide.GetComponentInChildren<TextMeshProUGUI>();
 
         // Just to ensure camera is set to level 1 position at the start of the game
         RepositionTargetAreaOnLevelChange();
@@ -113,13 +122,18 @@ public class Cameraman : MonoBehaviour
                 transform.position =
                     Vector3.Lerp(transform.position, clampedTargetPosition, Time.deltaTime * cameraSmoothSpeed);
                 if (cameraHoverGuide.activeSelf == false)
+                {
                     cameraHoverGuide.SetActive(true);
+                    cameraHoverGuide.GetComponent<Image>().enabled = true;
+                    cameraXEndEarlyToast.text = "Hover Right";
+                }
             }
         }
         else
         {
             MoveCameraWithLerp(target); // FOLLOW LAUNCHED OBJECT
-            cameraHoverGuide.SetActive(false);
+            cameraXEndEarlyToast.text = "Press \"SPACE\" to end";
+            cameraHoverGuide.GetComponent<Image>().enabled = false;
         }
         // transform.position = new Vector3(target.position.x, fixedY, fixedZ);
     }
